@@ -9,9 +9,6 @@ const example: FastifyPluginAsync = async (fastify): Promise<void> => {
     url: '/auth/signup',
     schema: {
       body: SignUpPayload,
-      response: {
-        200: SignInResponse,
-      },
     },
     handler: useHandler(signUpHandler),
   });
@@ -20,6 +17,9 @@ const example: FastifyPluginAsync = async (fastify): Promise<void> => {
     url: '/auth/signin',
     schema: {
       body: SignInPayload,
+      response: {
+        200: SignInResponse,
+      },
     },
     handler: useHandler(signInHandler),
   });

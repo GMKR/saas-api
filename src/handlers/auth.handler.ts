@@ -1,6 +1,5 @@
 import { compare, hash } from 'bcrypt';
 import { FastifyReply, FastifyRequest } from 'fastify';
-import { sign } from 'jsonwebtoken';
 import { SignInPayloadType, SignUpPayloadType, SignInResponseType } from '../schemas/auth';
 import prismaClient from '../utils/prisma';
 
@@ -17,7 +16,7 @@ export const signUpHandler = async (request: FastifyRequest<{ Body: SignUpPayloa
     },
   });
   if (existingUser) {
-    return { root: true };
+    return reply.conflict('User account with same email already exists');
   }
   await prismaClient.user.create({
     data: {
@@ -45,7 +44,7 @@ export const signInHandler = async (request: FastifyRequest<{ Body: SignInPayloa
     const verified = await compare(payload.password, fetchedUser.password);
     if (verified) {
       return {
-        token: sign({ sub: fetchedUser.id }, process.env.JWT_SECRET as string),
+        token: await reply.jwtSign({ id: fetchedUser.id }),
       };
     }
   }

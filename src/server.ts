@@ -31,4 +31,5 @@ app.listen(process.env.PORT || 9000, (err) => {
     app.log.error(err);
     process.exit(1);
   }
+  console.table(app.printRoutes());
 });
