@@ -1,7 +1,7 @@
 import { FastifyPluginAsync } from 'fastify';
-import { signInHandler, signUpHandler } from '../handlers/auth.handler';
+import { signInHandler, SignInPayload, SignInResponse } from '../handlers/auth/signin';
+import { signUpHandler, SignUpPayload } from '../handlers/auth/signup';
 import { useHandler } from '../utils/routes';
-import { SignUpPayload, SignInPayload, SignInResponse } from '../schemas/auth';
 
 const example: FastifyPluginAsync = async (fastify): Promise<void> => {
   fastify.route({

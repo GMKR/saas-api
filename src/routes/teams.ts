@@ -1,6 +1,6 @@
 import { FastifyPluginAsync } from 'fastify';
-import { teamsListHandler } from '../handlers/teams.handler';
-import { TeamListQuery, TeamListResponsePayload } from '../schemas/team';
+import { TeamListQuery, TeamListResponse, teamsListHandler } from '../handlers/teams/list';
+import { TeamParams, teamSingleHandler, TeamSingleResponse } from '../handlers/teams/single';
 import { useHandler } from '../utils/routes';
 
 const example: FastifyPluginAsync = async (fastify): Promise<void> => {
@@ -10,13 +10,28 @@ const example: FastifyPluginAsync = async (fastify): Promise<void> => {
     schema: {
       querystring: TeamListQuery,
       response: {
-        200: TeamListResponsePayload,
+        200: TeamListResponse,
       },
     },
     preValidation: [
       fastify.authenticate,
     ],
     handler: useHandler(teamsListHandler),
+  });
+
+  fastify.route({
+    method: 'GET',
+    url: '/teams/:teamId',
+    schema: {
+      params: TeamParams,
+      response: {
+        200: TeamSingleResponse,
+      },
+    },
+    preValidation: [
+      fastify.authenticate,
+    ],
+    handler: useHandler(teamSingleHandler),
   });
 };
 
