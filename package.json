@@ -26,6 +26,7 @@
   },
   "dependencies": {
     "@prisma/client": "^2.22.1",
+    "@sinclair/typebox": "^0.16.5",
     "bcrypt": "^5.0.1",
     "close-with-grace": "^1.1.0",
     "dotenv": "^9.0.2",
