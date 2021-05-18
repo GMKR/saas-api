@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.2.0](https://github.com/GMKR/saas-boilerplate/compare/v1.1.0...v1.2.0) (2021-05-18)
+
+
+### Features
+
+* **teams:** implemted CRUD for teams ([87d8793](https://github.com/GMKR/saas-boilerplate/commit/87d8793bf920e48dde9e74b7a52c9886e7b9e3a7))
+
 ## [1.1.0](https://github.com/GMKR/saas-boilerplate/compare/v1.0.0...v1.1.0) (2021-05-18)
 
 
