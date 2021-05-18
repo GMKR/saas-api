@@ -26,5 +26,10 @@ export const SignUpPayload = Type.Object({
   }),
 });
 
+export const SignInResponse = Type.Object({
+  token: Type.String(),
+});
+
 export type SignInPayloadType = Static<typeof SignInPayload>;
 export type SignUpPayloadType = Static<typeof SignUpPayload>;
+export type SignInResponseType = Static<typeof SignInResponse>;

@@ -1,7 +1,7 @@
 import { compare, hash } from 'bcrypt';
 import { FastifyReply, FastifyRequest } from 'fastify';
 import { sign } from 'jsonwebtoken';
-import { SignInPayloadType, SignUpPayloadType } from '../schemas/auth';
+import { SignInPayloadType, SignUpPayloadType, SignInResponseType } from '../schemas/auth';
 import prismaClient from '../utils/prisma';
 
 export const signUpHandler = async (request: FastifyRequest<{ Body: SignUpPayloadType }>, reply: FastifyReply) => {
@@ -28,7 +28,7 @@ export const signUpHandler = async (request: FastifyRequest<{ Body: SignUpPayloa
   return reply.code(204).send();
 };
 
-export const signInHandler = async (request: FastifyRequest<{ Body: SignInPayloadType }>, reply: FastifyReply) => {
+export const signInHandler = async (request: FastifyRequest<{ Body: SignInPayloadType, Response: SignInResponseType }>, reply: FastifyReply) => {
   const payload = request.body;
   const fetchedUser = await prismaClient.user.findFirst({
     where: {
@@ -44,7 +44,9 @@ export const signInHandler = async (request: FastifyRequest<{ Body: SignInPayloa
   if (fetchedUser) {
     const verified = await compare(payload.password, fetchedUser.password);
     if (verified) {
-      return sign({ sub: fetchedUser.id }, process.env.JWT_SECRET as string);
+      return {
+        token: sign({ sub: fetchedUser.id }, process.env.JWT_SECRET as string),
+      };
     }
   }
   return reply.unauthorized('Wrong email and password combination');
