@@ -42,9 +42,7 @@ export const signInHandler = async (request: FastifyRequest<{ Body: SignInPayloa
     },
   });
   if (fetchedUser) {
-    console.log(fetchedUser.password);
     const verified = await compare(payload.password, fetchedUser.password);
-    console.log(verified);
     if (verified) {
       return sign({ sub: fetchedUser.id }, process.env.JWT_SECRET as string);
     }
