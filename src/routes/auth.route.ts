@@ -1,4 +1,6 @@
 import { FastifyPluginAsync } from 'fastify';
+import { forgotPasswordHandler, ForgotPasswordPayload } from '../handlers/auth/forgot.handler';
+import { resetPasswordHandler, ResetPasswordPayload } from '../handlers/auth/reset.handler';
 import { signInHandler, SignInPayload, SignInResponse } from '../handlers/auth/signin.handler';
 import { signUpHandler, SignUpPayload } from '../handlers/auth/signup.handler';
 import { useHandler } from '../utils/routes';
@@ -22,6 +24,24 @@ const example: FastifyPluginAsync = async (fastify): Promise<void> => {
       },
     },
     handler: useHandler(signInHandler),
+  });
+
+  fastify.route({
+    method: 'POST',
+    url: '/auth/forgot-password',
+    schema: {
+      body: ForgotPasswordPayload,
+    },
+    handler: useHandler(forgotPasswordHandler),
+  });
+
+  fastify.route({
+    method: 'POST',
+    url: '/auth/reset-password',
+    schema: {
+      body: ResetPasswordPayload,
+    },
+    handler: useHandler(resetPasswordHandler),
   });
 };
 
