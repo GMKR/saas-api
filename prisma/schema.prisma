@@ -10,14 +10,65 @@ generator client {
   provider = "prisma-client-js"
 }
 
+enum PaymentGateway {
+  STRIPE
+  PADDLE
+}
+
 model Team {
-  id        String     @id @default(cuid())
-  name      String?
-  isActive  Boolean?   @default(true)
-  settings  Json?      @db.Json
-  createdAt DateTime   @default(now())
-  updatedAt DateTime   @updatedAt
-  userTeams UserTeam[]
+  id                   String                @id @default(cuid())
+  name                 String?
+  isActive             Boolean?              @default(true)
+  settings             Json?                 @db.Json
+  createdAt            DateTime              @default(now())
+  updatedAt            DateTime              @updatedAt
+  userTeams            UserTeam[]
+  paymentProfile       PaymentProfile?
+  paymentSubscriptions PaymentSubscription[]
+  paymentInvoices      PaymentInvoice[]
+}
+
+model PaymentProfile {
+  id           String         @id @default(cuid())
+  team         Team           @relation(fields: [teamId], references: [id])
+  teamId       String
+  gateway      PaymentGateway
+  cardBrand    String?
+  cardLastFour String?        @db.VarChar(4)
+  trailEndsAt  DateTime
+  meta         Json?
+  createdAt    DateTime       @default(now())
+  updatedAt    DateTime       @updatedAt
+}
+
+model PaymentSubscription {
+  id            String           @id @default(cuid())
+  team          Team             @relation(fields: [teamId], references: [id])
+  teamId        String
+  name          String
+  gatewayId     String
+  gatewayStatus String
+  gatewayPlan   String?
+  trailEndsAt   DateTime?
+  endsAt        DateTime?
+  meta          Json?
+  createdAt     DateTime         @default(now())
+  updatedAt     DateTime         @updatedAt
+  invoices      PaymentInvoice[]
+
+  @@index([teamId, gatewayStatus])
+}
+
+model PaymentInvoice {
+  id                    String              @id @default(cuid())
+  team                  Team                @relation(fields: [teamId], references: [id])
+  teamId                String
+  subscription          PaymentSubscription @relation(fields: [paymentSubscriptionId], references: [id])
+  gatewayId             String
+  amountPaid            Decimal
+  invoiceUrl            String?
+  meta                  Json?
+  paymentSubscriptionId String
 }
 
 model Role {

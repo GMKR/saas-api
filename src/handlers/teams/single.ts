@@ -1,5 +1,6 @@
 import { Static, Type } from '@sinclair/typebox';
 import { FastifyReply, FastifyRequest } from 'fastify';
+import { messages } from '../../messages/en';
 import prismaClient from '../../utils/prisma';
 
 export const TeamParams = Type.Object({
@@ -39,5 +40,5 @@ export const teamSingleHandler = async (request: FastifyRequest<{
   if (fetchedTeam) {
     return fetchedTeam;
   }
-  return reply.notFound('Team not found');
+  return reply.notFound(messages.TEAM_NOT_FOUND);
 };

@@ -1,6 +1,7 @@
 import { Static, Type } from '@sinclair/typebox';
 import { hash } from 'bcrypt';
 import { FastifyReply, FastifyRequest } from 'fastify';
+import { messages } from '../../messages/en';
 import prismaClient from '../../utils/prisma';
 
 export const SignUpPayload = Type.Object({
@@ -19,7 +20,11 @@ export const SignUpPayload = Type.Object({
   }),
 });
 
-export const signUpHandler = async (request: FastifyRequest<{ Body: Static<typeof SignUpPayload> }>, reply: FastifyReply) => {
+export const SignUpResponse = Type.Object({
+  id: Type.String(),
+});
+
+export const signUpHandler = async (request: FastifyRequest<{ Body: Static<typeof SignUpPayload>, Response: Static<typeof SignUpResponse> }>, reply: FastifyReply) => {
   const payload = request.body;
   const existingUser = await prismaClient.user.findFirst({
     where: {
@@ -32,13 +37,18 @@ export const signUpHandler = async (request: FastifyRequest<{ Body: Static<typeo
     },
   });
   if (existingUser) {
-    return reply.conflict('User account with same email already exists');
+    return reply.conflict(messages.USER_CONFLICT_ERROR);
   }
-  await prismaClient.user.create({
+  const createdUser = await prismaClient.user.create({
     data: {
       ...payload,
       password: await hash(payload.password, 10),
     },
+    select: {
+      id: true,
+    },
   });
-  return reply.code(204).send();
+  return {
+    id: createdUser.id,
+  };
 };

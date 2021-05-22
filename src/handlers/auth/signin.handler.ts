@@ -1,6 +1,7 @@
 import { Static, Type } from '@sinclair/typebox';
 import { compare } from 'bcrypt';
 import { FastifyReply, FastifyRequest } from 'fastify';
+import { messages } from '../../messages/en';
 import prismaClient from '../../utils/prisma';
 
 export const SignInPayload = Type.Object({
@@ -15,6 +16,7 @@ export const SignInPayload = Type.Object({
 
 export const SignInResponse = Type.Object({
   token: Type.String(),
+  id: Type.String(),
 });
 
 export const signInHandler = async (request: FastifyRequest<{ Body: Static<typeof SignInPayload>, Response: Static<typeof SignInResponse> }>, reply: FastifyReply) => {
@@ -35,8 +37,9 @@ export const signInHandler = async (request: FastifyRequest<{ Body: Static<typeo
     if (verified) {
       return {
         token: await reply.jwtSign({ id: fetchedUser.id }),
+        id: fetchedUser.id,
       };
     }
   }
-  return reply.unauthorized('Wrong email and password combination');
+  return reply.unauthorized(messages.USER_INVALID_CREDENTIALS);
 };
