@@ -17,14 +17,19 @@ export class StripePayments {
     });
   }
 
-  createCheckout(config: CreateCheckoutConfig) {
+  createCheckout(planId: string, config: CreateCheckoutConfig) {
     const params: Stripe.Checkout.SessionCreateParams = {
       mode: 'subscription',
       payment_method_types: ['card'],
       allow_promotion_codes: config.allowPromotionCodes,
       cancel_url: config.cancelUrl,
       success_url: config.successUrl,
-      line_items: config.lineItems,
+      line_items: [
+        {
+          price: planId,
+          quantity: 1,
+        },
+      ],
     };
     return this.StripeClient.checkout.sessions.create(params);
   }

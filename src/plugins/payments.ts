@@ -5,6 +5,9 @@ declare module 'fastify' {
   interface FastifyInstance {
     payments: typeof Payments
   }
+  interface FastifyRequest {
+    payments: Payments
+  }
 }
 
 export default FastifyPlugin(async (fastify) => {

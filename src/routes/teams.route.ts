@@ -1,4 +1,5 @@
 import { FastifyPluginAsync } from 'fastify';
+import { paymentPlanSingleHandler } from '../handlers/payments/plans/single';
 import { paymentProfileSingleHandler } from '../handlers/payments/profile/single';
 import { paymentSubscriptionsList } from '../handlers/payments/subscriptions/list';
 import { teamCreateHandler, TeamCreatePayload } from '../handlers/teams/create';
@@ -81,6 +82,15 @@ const example: FastifyPluginAsync = async (fastify): Promise<void> => {
       params: TeamParams,
     },
     handler: useHandler(paymentSubscriptionsList),
+  });
+
+  fastify.route({
+    method: 'GET',
+    url: '/teams/:teamId/payment-plan',
+    schema: {
+      params: TeamParams,
+    },
+    handler: useHandler(paymentPlanSingleHandler),
   });
 };
 

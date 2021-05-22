@@ -6,4 +6,5 @@ export const messages = {
   FORGOTPASSWORD_WAIT: 'Please wait for sometime and check your email. You can request again in few mins',
   RESETPASSWORD_SUCCESS: 'Your password reset is successful. Please login with your email and password',
   RESETPASSWORD_ERROR: 'Unable to reset your password, Please try again using forgot password page',
+  PLAN_NOTFOUND: 'Select plan is not available',
 };

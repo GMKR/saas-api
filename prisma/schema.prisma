@@ -27,6 +27,23 @@ model Team {
   paymentProfile       PaymentProfile?
   paymentSubscriptions PaymentSubscription[]
   paymentInvoices      PaymentInvoice[]
+  paymentPlans         PaymentPlan[]
+}
+
+model PaymentPlan {
+  id                   String                @id @default(cuid())
+  name                 String                @unique
+  isActive             Boolean?              @default(true)
+  description          String?
+  features             String[]
+  team                 Team?                 @relation(fields: [teamId], references: [id])
+  teamId               String?
+  gatewayId            String
+  price                Decimal
+  duration             Int
+  createdAt            DateTime              @default(now())
+  updatedAt            DateTime              @updatedAt
+  paymentSubscriptions PaymentSubscription[]
 }
 
 model PaymentProfile {
@@ -48,6 +65,8 @@ model PaymentSubscription {
   team          Team             @relation(fields: [teamId], references: [id])
   teamId        String
   name          String
+  plan          PaymentPlan      @relation(fields: [paymentPlanId], references: [id])
+  paymentPlanId String
   gatewayId     String
   gatewayStatus String
   gatewayPlan   String?
