@@ -1,4 +1,6 @@
 import { FastifyPluginAsync } from 'fastify';
+import { paymentProfileSingleHandler } from '../handlers/payments/profile/single';
+import { paymentSubscriptionsList } from '../handlers/payments/subscriptions/list';
 import { teamCreateHandler, TeamCreatePayload } from '../handlers/teams/create';
 import { TeamListQuery, TeamListResponse, teamsListHandler } from '../handlers/teams/list';
 import { teamRemoveHandler } from '../handlers/teams/remove';
@@ -61,6 +63,24 @@ const example: FastifyPluginAsync = async (fastify): Promise<void> => {
       fastify.authenticate,
     ],
     handler: useHandler(teamRemoveHandler),
+  });
+
+  fastify.route({
+    method: 'GET',
+    url: '/teams/:teamId/payment-profile',
+    schema: {
+      params: TeamParams,
+    },
+    handler: useHandler(paymentProfileSingleHandler),
+  });
+
+  fastify.route({
+    method: 'GET',
+    url: '/teams/:teamId/payment-subscriptions',
+    schema: {
+      params: TeamParams,
+    },
+    handler: useHandler(paymentSubscriptionsList),
   });
 };
 

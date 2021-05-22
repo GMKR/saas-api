@@ -29,9 +29,7 @@ export const teamSingleHandler = async (request: FastifyRequest<{
     where: {
       userTeams: {
         some: {
-          user: {
-            id: userId,
-          },
+          userId,
         },
       },
       id: teamId,

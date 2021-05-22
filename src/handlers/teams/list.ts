@@ -27,9 +27,7 @@ export const teamsListHandler = async (request: FastifyRequest<{
       where: {
         userTeams: {
           some: {
-            user: {
-              id: userId,
-            },
+            userId,
           },
         },
       },
@@ -40,9 +38,7 @@ export const teamsListHandler = async (request: FastifyRequest<{
       where: {
         userTeams: {
           some: {
-            user: {
-              id: userId,
-            },
+            userId,
           },
         },
       },

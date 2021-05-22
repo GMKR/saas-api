@@ -13,9 +13,7 @@ export const teamRemoveHandler = async (request: FastifyRequest<{
       id: teamId,
       userTeams: {
         some: {
-          user: {
-            id: userId,
-          },
+          userId,
         },
       },
     },

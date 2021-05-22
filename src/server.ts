@@ -7,7 +7,7 @@ const closeWithGrace = require('close-with-grace');
 
 // Instantiate Fastify with some config
 const app = Fastify({
-  logger: true,
+  logger: false,
 });
 
 app.register(AppService);

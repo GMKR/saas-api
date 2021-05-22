@@ -33,6 +33,7 @@ model PaymentProfile {
   id           String         @id @default(cuid())
   team         Team           @relation(fields: [teamId], references: [id])
   teamId       String
+  gatewayId    String
   gateway      PaymentGateway
   cardBrand    String?
   cardLastFour String?        @db.VarChar(4)
