@@ -10,8 +10,9 @@ export default class Payments {
   constructor(provider: PaymentGateway, config: StripeGatewayConfig) {
     if (provider === 'STRIPE') {
       this.IPaymentGateway = new StripePayments(config);
+    } else {
+      throw new Error('Unknown payment gateway');
     }
-    throw new Error('Unknown payment gateway');
   }
 
   async getProfile(teamId: string) {
@@ -67,7 +68,7 @@ export default class Payments {
     return this.IPaymentGateway.createCheckout(fetchedPlan.gatewayId, gatewayConfig);
   }
 
-  async getAvailablePlans(teamId: string) {
+  async getAvailablePlans(teamId?: string) {
     return prismaClient.paymentPlan.findMany({
       where: {
         isActive: true,

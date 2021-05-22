@@ -5,7 +5,7 @@ import { signInHandler, SignInPayload, SignInResponse } from '../handlers/auth/s
 import { signUpHandler, SignUpPayload } from '../handlers/auth/signup.handler';
 import { useHandler } from '../utils/routes';
 
-const example: FastifyPluginAsync = async (fastify): Promise<void> => {
+const auth: FastifyPluginAsync = async (fastify): Promise<void> => {
   fastify.route({
     method: 'POST',
     url: '/auth/signup',
@@ -45,4 +45,4 @@ const example: FastifyPluginAsync = async (fastify): Promise<void> => {
   });
 };
 
-export default example;
+export default auth;

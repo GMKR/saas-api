@@ -39,8 +39,8 @@ model PaymentPlan {
   team                 Team?                 @relation(fields: [teamId], references: [id])
   teamId               String?
   gatewayId            String
-  price                Decimal
-  duration             Int
+  price                Decimal               @db.Decimal(15, 6)
+  period               Int
   createdAt            DateTime              @default(now())
   updatedAt            DateTime              @updatedAt
   paymentSubscriptions PaymentSubscription[]
