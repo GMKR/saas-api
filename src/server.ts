@@ -28,9 +28,10 @@ app.addHook('onClose', async (_, done) => {
 // Start listening.
 app.listen(process.env.PORT || 9000, (err) => {
   if (err) {
-    console.log(err);
-    app.log.error(err);
+    // eslint-disable-next-line no-console
+    console.error(err);
     process.exit(1);
   }
+  // eslint-disable-next-line no-console
   console.table(app.printRoutes());
 });

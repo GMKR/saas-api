@@ -29,6 +29,9 @@ export default class Payments {
       where: {
         teamId,
       },
+      include: {
+        plan: true,
+      },
     });
   }
 
@@ -40,8 +43,8 @@ export default class Payments {
     }).plan();
   }
 
-  async createCheckout(teamId: string, planId: string, config: CreateCheckoutConfig) {
-    const gatewayConfig = config;
+  async createCheckout(teamId: string, planId: string, config: { successUrl: string, cancelUrl: string, allowPromotionCodes: boolean }) {
+    const gatewayConfig: CreateCheckoutConfig = config;
     const existingProfile = await prismaClient.paymentProfile.findFirst({
       where: {
         teamId,

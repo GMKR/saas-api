@@ -12,6 +12,10 @@ declare module 'fastify' {
 const payments = new Payments('STRIPE', { apiKey: process.env.STRIPE_KEY as string });
 
 export default FastifyPlugin(async (fastify) => {
-  fastify.decorate('payments', payments);
-  fastify.decorateRequest('payments', payments);
+  fastify.decorate('payments', {
+    getter: () => payments,
+  });
+  fastify.decorateRequest('payments', {
+    getter: () => payments,
+  });
 });

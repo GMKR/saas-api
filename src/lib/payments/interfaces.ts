@@ -1,7 +1,7 @@
 export interface CreateCheckoutConfig {
-  allowPromotionCodes: boolean
+  allowPromotionCodes?: boolean
   successUrl: string
   cancelUrl: string
   customer?: string
-  teamId: string
+  teamId?: string
 }
