@@ -43,6 +43,15 @@ const auth: FastifyPluginAsync = async (fastify): Promise<void> => {
     },
     handler: useHandler(resetPasswordHandler),
   });
+
+  fastify.route({
+    method: 'GET',
+    url: '/me',
+    preValidation: [
+      fastify.authenticate,
+    ],
+    handler: async (request) => request.user,
+  });
 };
 
 export default auth;
