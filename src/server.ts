@@ -7,7 +7,10 @@ const closeWithGrace = require('close-with-grace');
 
 // Instantiate Fastify with some config
 const app = Fastify({
-  logger: false,
+  logger: {
+    prettyPrint: true,
+  },
+  disableRequestLogging: true,
 });
 
 app.register(AppService);

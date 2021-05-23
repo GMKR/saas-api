@@ -1,4 +1,5 @@
 import { FastifyPluginAsync } from 'fastify';
+import { CheckoutCreatePayload, paymentCheckoutCreateHandler } from '../handlers/payments/checkout/create';
 import { paymentPlanListHandler } from '../handlers/payments/plans/list';
 import { paymentProfileSingleHandler } from '../handlers/payments/profile/single';
 import { paymentSubscriptionsList } from '../handlers/payments/subscriptions/list';
@@ -91,6 +92,16 @@ const example: FastifyPluginAsync = async (fastify): Promise<void> => {
       params: TeamParams,
     },
     handler: useHandler(paymentPlanListHandler),
+  });
+
+  fastify.route({
+    method: 'POST',
+    url: '/teams/:teamId/payment-checkout',
+    schema: {
+      params: TeamParams,
+      body: CheckoutCreatePayload,
+    },
+    handler: useHandler(paymentCheckoutCreateHandler),
   });
 };
 
