@@ -73,6 +73,9 @@ const example: FastifyPluginAsync = async (fastify): Promise<void> => {
     schema: {
       params: TeamParams,
     },
+    preValidation: [
+      fastify.authenticate,
+    ],
     handler: useHandler(paymentProfileSingleHandler),
   });
 
@@ -82,6 +85,9 @@ const example: FastifyPluginAsync = async (fastify): Promise<void> => {
     schema: {
       params: TeamParams,
     },
+    preValidation: [
+      fastify.authenticate,
+    ],
     handler: useHandler(paymentSubscriptionsList),
   });
 
@@ -91,6 +97,9 @@ const example: FastifyPluginAsync = async (fastify): Promise<void> => {
     schema: {
       params: TeamParams,
     },
+    preValidation: [
+      fastify.authenticate,
+    ],
     handler: useHandler(paymentPlanListHandler),
   });
 
@@ -101,6 +110,9 @@ const example: FastifyPluginAsync = async (fastify): Promise<void> => {
       params: TeamParams,
       body: CheckoutCreatePayload,
     },
+    preValidation: [
+      fastify.authenticate,
+    ],
     handler: useHandler(paymentCheckoutCreateHandler),
   });
 };
