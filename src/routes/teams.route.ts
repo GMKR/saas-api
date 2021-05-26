@@ -7,6 +7,7 @@ import { teamCreateHandler, TeamCreatePayload } from '../handlers/teams/create';
 import { TeamListQuery, TeamListResponse, teamsListHandler } from '../handlers/teams/list';
 import { teamRemoveHandler } from '../handlers/teams/remove';
 import { TeamParams, teamSingleHandler, TeamSingleResponse } from '../handlers/teams/single';
+import { teamUpdateHandler, TeamUpdatePayload } from '../handlers/teams/update';
 import { useHandler } from '../utils/routes';
 
 const example: FastifyPluginAsync = async (fastify): Promise<void> => {
@@ -53,6 +54,19 @@ const example: FastifyPluginAsync = async (fastify): Promise<void> => {
       fastify.authenticate,
     ],
     handler: useHandler(teamCreateHandler),
+  });
+
+  fastify.route({
+    method: 'PATCH',
+    url: '/teams/:teamId',
+    schema: {
+      params: TeamParams,
+      body: TeamUpdatePayload,
+    },
+    preValidation: [
+      fastify.authenticate,
+    ],
+    handler: useHandler(teamUpdateHandler),
   });
 
   fastify.route({

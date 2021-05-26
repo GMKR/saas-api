@@ -12,6 +12,7 @@ export const TeamSingleResponse = Type.Object({
   name: Type.String(),
   isActive: Type.Boolean(),
   settings: Type.Optional(Type.Object({})),
+  description: Type.Optional(Type.String()),
   createdAt: Type.String({
     format: 'date-time',
   }),
