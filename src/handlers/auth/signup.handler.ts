@@ -1,28 +1,9 @@
-import { Static, Type } from '@sinclair/typebox';
+import { Static } from '@sinclair/typebox';
 import { hash } from 'bcrypt';
 import { FastifyReply, FastifyRequest } from 'fastify';
+import { SignUpPayload, SignUpResponse } from '../../@schemas/auth';
 import { messages } from '../../messages/en';
 import prismaClient from '../../utils/prisma';
-
-export const SignUpPayload = Type.Object({
-  firstName: Type.String({
-    maxLength: 40,
-  }),
-  lastName: Type.String({
-    maxLength: 40,
-  }),
-  email: Type.String({
-    format: 'email',
-  }),
-  password: Type.String({
-    minLength: 8,
-    maxLength: 40,
-  }),
-});
-
-export const SignUpResponse = Type.Object({
-  id: Type.String(),
-});
 
 export const signUpHandler = async (request: FastifyRequest<{ Body: Static<typeof SignUpPayload>, Response: Static<typeof SignUpResponse> }>, reply: FastifyReply) => {
   const payload = request.body;

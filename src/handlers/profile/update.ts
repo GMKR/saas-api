@@ -1,23 +1,9 @@
-import { Static, Type } from '@sinclair/typebox';
+import { Static } from '@sinclair/typebox';
 import { hash } from 'bcrypt';
 import { FastifyReply, FastifyRequest } from 'fastify';
+import { ProfileUpdatePayload } from '../../@schemas/user';
 import { messages } from '../../messages/en';
 import prismaClient from '../../utils/prisma';
-
-export const ProfileUpdatePayload = Type.Object({
-  firstName: Type.Optional(Type.String({
-    minLength: 3,
-  })),
-  lastName: Type.Optional(Type.String({
-    minLength: 1,
-  })),
-  email: Type.Optional(Type.String({
-    format: 'email',
-  })),
-  password: Type.Optional(Type.String({
-    minLength: 8,
-  })),
-});
 
 export const profileUpdateHandler = async (request: FastifyRequest<{ Body: Static<typeof ProfileUpdatePayload> }>, reply: FastifyReply) => {
   const userId = request.user.id;

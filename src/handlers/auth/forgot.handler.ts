@@ -1,14 +1,9 @@
-import { Static, Type } from '@sinclair/typebox';
+import { Static } from '@sinclair/typebox';
 import { FastifyReply, FastifyRequest } from 'fastify';
 import { DateTime } from 'luxon';
+import { ForgotPasswordPayload } from '../../@schemas/auth';
 import { messages } from '../../messages/en';
 import prismaClient from '../../utils/prisma';
-
-export const ForgotPasswordPayload = Type.Object({
-  email: Type.String({
-    format: 'email',
-  }),
-});
 
 export const forgotPasswordHandler = async (request: FastifyRequest<{ Body: Static<typeof ForgotPasswordPayload> }>, reply: FastifyReply) => {
   const payload = request.body;

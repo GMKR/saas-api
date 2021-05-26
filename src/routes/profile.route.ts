@@ -1,6 +1,7 @@
 import { FastifyPluginAsync } from 'fastify';
+import { ProfileUpdatePayload } from '../@schemas/user';
 import { profileSingleHandler } from '../handlers/profile/single';
-import { profileUpdateHandler, ProfileUpdatePayload } from '../handlers/profile/update';
+import { profileUpdateHandler } from '../handlers/profile/update';
 import { useHandler } from '../utils/routes';
 
 const profile: FastifyPluginAsync = async (fastify): Promise<void> => {

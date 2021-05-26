@@ -1,19 +1,9 @@
-import { Static, Type } from '@sinclair/typebox';
+import { Static } from '@sinclair/typebox';
 import { hash } from 'bcrypt';
 import { FastifyReply, FastifyRequest } from 'fastify';
+import { ResetPasswordPayload } from '../../@schemas/auth';
 import { messages } from '../../messages/en';
 import prismaClient from '../../utils/prisma';
-
-export const ResetPasswordPayload = Type.Object({
-  email: Type.String({
-    format: 'email',
-  }),
-  password: Type.String({
-    minLength: 8,
-    maxLength: 35,
-  }),
-  key: Type.String(),
-});
 
 export const resetPasswordHandler = async (request: FastifyRequest<{ Body: Static<typeof ResetPasswordPayload> }>, reply: FastifyReply) => {
   const payload = request.body;

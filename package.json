@@ -6,8 +6,10 @@
   "scripts": {
     "dev": "tsnd --respawn --exit-child --rs --notify src/server.ts",
     "build": "tsc",
+    "lint": "eslint . --fix",
     "release": "standard-version",
-    "commit": "cz"
+    "commit": "cz",
+    "prepare": "husky install"
   },
   "author": "",
   "license": "ISC",
@@ -23,6 +25,8 @@
     "eslint": "^7.27.0",
     "eslint-config-airbnb-typescript": "^12.3.1",
     "eslint-plugin-import": "^2.23.3",
+    "husky": "^6.0.0",
+    "lint-staged": "^11.0.0",
     "pino-pretty": "^4.8.0",
     "prisma": "^2.23.0",
     "standard-version": "^9.3.0",
@@ -47,6 +51,9 @@
     "luxon": "^1.27.0",
     "stripe": "^8.149.0",
     "zlib": "^1.0.5"
+  },
+  "lint-staged": {
+    "*.{ts,js}": "npm run lint"
   },
   "config": {
     "commitizen": {

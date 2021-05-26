@@ -1,7 +1,7 @@
 import { Static } from '@sinclair/typebox';
 import { FastifyRequest } from 'fastify';
+import { TeamParams } from '../../@schemas/teams';
 import prismaClient from '../../utils/prisma';
-import { TeamParams } from './single';
 
 export const teamRemoveHandler = async (request: FastifyRequest<{
   Params: Static<typeof TeamParams>

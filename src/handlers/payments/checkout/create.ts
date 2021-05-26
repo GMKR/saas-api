@@ -1,10 +1,7 @@
-import { Static, Type } from '@sinclair/typebox';
+import { Static } from '@sinclair/typebox';
 import { FastifyRequest } from 'fastify';
-import { TeamParams } from '../../teams/single';
-
-export const CheckoutCreatePayload = Type.Object({
-  planId: Type.String(),
-});
+import { CheckoutCreatePayload } from '../../../@schemas/payments';
+import { TeamParams } from '../../../@schemas/teams';
 
 export const paymentCheckoutCreateHandler = async (request: FastifyRequest<{ Params: Static<typeof TeamParams>, Body: Static<typeof CheckoutCreatePayload> }>) => {
   const { teamId } = request.params;

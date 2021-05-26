@@ -1,13 +1,7 @@
-import { Static, Type } from '@sinclair/typebox';
+import { Static } from '@sinclair/typebox';
 import { FastifyRequest } from 'fastify';
+import { TeamCreatePayload } from '../../@schemas/teams';
 import prismaClient from '../../utils/prisma';
-
-export const TeamCreatePayload = Type.Object({
-  name: Type.String({
-    minLength: 5,
-  }),
-  roleId: Type.String(),
-});
 
 export const teamCreateHandler = async (request: FastifyRequest<{
   Body: Static<typeof TeamCreatePayload>

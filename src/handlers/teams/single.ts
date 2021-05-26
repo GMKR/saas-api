@@ -1,25 +1,8 @@
-import { Static, Type } from '@sinclair/typebox';
+import { Static } from '@sinclair/typebox';
 import { FastifyReply, FastifyRequest } from 'fastify';
+import { TeamParams } from '../../@schemas/teams';
 import { messages } from '../../messages/en';
 import prismaClient from '../../utils/prisma';
-
-export const TeamParams = Type.Object({
-  teamId: Type.String(),
-});
-
-export const TeamSingleResponse = Type.Object({
-  id: Type.String(),
-  name: Type.String(),
-  isActive: Type.Boolean(),
-  settings: Type.Optional(Type.Object({})),
-  description: Type.Optional(Type.String()),
-  createdAt: Type.String({
-    format: 'date-time',
-  }),
-  updatedAt: Type.String({
-    format: 'date-time',
-  }),
-});
 
 export const teamSingleHandler = async (request: FastifyRequest<{
   Params: Static<typeof TeamParams>

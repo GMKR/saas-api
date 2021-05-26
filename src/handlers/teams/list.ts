@@ -1,21 +1,7 @@
-import { Static, Type } from '@sinclair/typebox';
+import { Static } from '@sinclair/typebox';
 import { FastifyRequest } from 'fastify';
+import { TeamListQuery } from '../../@schemas/teams';
 import prismaClient from '../../utils/prisma';
-import { TeamSingleResponse } from './single';
-
-export const TeamListQuery = Type.Object({
-  page: Type.Number({
-    default: 1,
-  }),
-  limit: Type.Number({
-    default: 20,
-  }),
-});
-
-export const TeamListResponse = Type.Object({
-  total: Type.Number(),
-  results: Type.Array(TeamSingleResponse),
-});
 
 export const teamsListHandler = async (request: FastifyRequest<{
   Querystring: Static<typeof TeamListQuery>
