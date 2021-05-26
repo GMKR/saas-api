@@ -8,6 +8,7 @@ export const profileSingleHandler = async (request: FastifyRequest) => {
       id: userId,
     },
     select: {
+      id: true,
       firstName: true,
       lastName: true,
       email: true,

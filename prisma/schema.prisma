@@ -19,6 +19,8 @@ enum PaymentGateway {
 model Team {
   id                   String                @id @default(cuid())
   name                 String?
+  description          String?
+  picture              String?
   isActive             Boolean?              @default(true)
   settings             Json?                 @db.Json
   createdAt            DateTime              @default(now())
